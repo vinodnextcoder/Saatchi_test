@@ -2,8 +2,8 @@
 
 
 This example demonstrates fitness app
-- create user account with admin roles  Mutaion name addUser
-- login as admin with mutation  login(email:"",password) get jwt token
+- create user account with admin roles  Mutaion name ** addUser **
+- login as admin with mutation  **  login(email:"",password)   ** get jwt token
 - create class using mutation addClass  with filed 
 ```
  addClass(

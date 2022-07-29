@@ -1,0 +1,258 @@
+{
+	"info": {
+		"_postman_id": "853d1166-e674-4e13-a415-8e1bd5f53e79",
+		"name": "Saatchi-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "admin account creation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "\r\nmutation {\r\n  addUser(email: \"saatch@test.com\", name:\"vinod\", phone: \"999999999\",password:\"123456\"\r\n        roles: [\"admin\"],\r\n      permissions: [\"read:own_account\"]){\r\n    status {\r\n      code\r\n      header\r\n      description\r\n    }\r\n  }\r\n}\r\n\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var res = pm.response.json();\r",
+							"console.log(res)\r",
+							"pm.globals.set('token', res.data.login.data.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "\r\nmutation {\r\n  login(email: \"vinod@email.com\", password:\"123456\"){\r\n  status{\r\n    code\r\n    header\r\n    description\r\n  }\r\n    data{\r\n      token\r\n    }\r\n  }\r\n}\r\n\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "class created",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n  addClass(\r\n    class: \"Mega class\"\r\n    batchStartTime: \"11:00\"\r\n    batchEndTime: \"11:00\"\r\n    trainer: [\"11111\"]\r\n    memeber: [\"111113\"]\r\n  ) {\r\n    status{\r\n      code\r\n      header\r\n      description\r\n    }\r\n    \r\n  }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "class update",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n  updateClass(\r\n    id:\"1\"\r\n    class: \"test333\"\r\n    batchStartTime: \"11:00\"\r\n    batchEndTime: \"11:00\"\r\n    trainer: [\"11111\"]\r\n    memeber: [\"11114\"]\r\n  ) {\r\n    status{\r\n      code\r\n      header\r\n      description\r\n    }\r\n    \r\n  }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get class list",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n  getList {\r\n    status {\r\n      code\r\n      header\r\n      description\r\n    }\r\n    classData{\r\n      class\r\n      batchStatus\r\n      batchStartTime\r\n      batchEndTime\r\n      trainerList{\r\n        trainer_name\r\n      }\r\n      memeberList{\r\n        memeber_name\r\n      }\r\n      size\r\n    }\r\n  \r\n  }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user List by type",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query{\r\n  getUserList(type:\"subscriber\"){\r\n    status{\r\n      code\r\n      description\r\n      header\r\n    }\r\n    data{\r\n      id\r\n      name\r\n      email\r\n      roles\r\n    }\r\n  }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n  deleteClass(\r\n    id:\"7\"\r\n  ) {\r\n    status{\r\n      code\r\n      header\r\n      description\r\n    }\r\n    \r\n  }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000"
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "tokenvalue",
+			"value": "null",
+			"type": "default"
+		}
+	]
+}

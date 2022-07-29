@@ -3,8 +3,10 @@
 
 This example demonstrates fitness app
 - create user account with admin roles  Mutaion name **addUser**
-- login as admin with mutation  **login(email:"",password)   ** get jwt token
+- login as admin with mutation  **login(email:"",password)** get jwt token
+- 
 - create class using mutation **addClass**  with filed 
+- 
 ```
  addClass(
     class: "Mega class"        name of the class
@@ -15,8 +17,8 @@ This example demonstrates fitness app
   )
 ```
 - update class using mutation **updateClass**  with filed 
--Query  **getList** query get classes list names
--Query  **getUserList**  query get user list
+- Query  **getList** query get classes list names
+- Query  **getUserList**  query get user list
 - delete user **deleteClass**
 
 ## postman collection added in repo
